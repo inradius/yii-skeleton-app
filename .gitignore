@@ -1,6 +1,7 @@
 /protected/config/production.php
 /protected/config/local.php
 .idea*
+.vagrant*
 
 #################
 ## NetBeans
