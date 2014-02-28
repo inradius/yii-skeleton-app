@@ -2,8 +2,6 @@ Yii Framework Skeleton App
 ======================
 This is a generic Yii Framework application with MySQL integration. I built this simple app as the starting point for many projects I have worked on in the past. This application allows for user registration, user sign-in and sign-out, Facebook/Google+/Windows Live sign-in, and password reset.
 
-This skeleton application does not include the Yii Framework itself. Download it [here](https://github.com/yiisoft/yii/).
-
 ## Install Dev Version
 To install the dev version, first install [VirtualBox](http://www.virtualbox.org/) and [Vagrant](http://www.vagrantup.com/). Once both are installed on your machine, run the following commands.
 ```vagrant
