@@ -19,7 +19,7 @@ class UserIdentity extends CUserIdentity {
             $this->errorCode = self::ERROR_USERNAME_INVALID;
         } else if ($user->login_disabled == 1) {
             $this->errorCode = self::ERROR_USERNAME_INVALID;
-        } elseif ($user->password != crypt($this->password, $user->password)&&!$this->_ssoAuth) {
+        } elseif (!CPasswordHelper::verifyPassword($this->password, $user->password)&&!$this->_ssoAuth) {
             $this->errorCode = self::ERROR_PASSWORD_INVALID;
         } else {
             $this->errorCode = self::ERROR_NONE;

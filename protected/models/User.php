@@ -167,7 +167,7 @@ class User extends CActiveRecord {
             } else {
                 $password = $model->password;
             }
-            $model->password = crypt($password, Randomness::blowfishSalt());
+            $model->password = CPasswordHelper::hashPassword($password);;
             $model->pass1 = $password;
             $model->email = strtolower($model->email);
         }
@@ -200,7 +200,7 @@ class User extends CActiveRecord {
     public function setPassword($password) {
         if (strlen($password) > 0) {
             // change password
-            $this->password = crypt($password, Randomness::blowfishSalt());
+            $this->password = CPasswordHelper::hashPassword($password);
         } else {
             // keep the original one
             $this->restoreAttribute('password');
