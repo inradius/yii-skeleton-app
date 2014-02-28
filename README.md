@@ -21,7 +21,14 @@ $ php composer.phar install
 
 Now the server and application should be set up and accessible from http://192.168.33.10/
 
-Todo: Database setup/migration documentation.
+To get the database set in place, run the following commands while still inside the vagrant ssh terminal.
+```mysql
+$ mysql -uroot -proot
+mysql> create database testdrive
+mysql> exit
+$ php protected/yiic migrate up
+```
+When prompted about applying the migrations, type `yes` and hit enter. This will create the applications tables needed for the application to function. Migrations are not in place though [#1](https://github.com/inradius/yii-skeleton-app/issues/1).
 
 ## Extensions
 I've included some extensions that I pretty much always use. These include:
