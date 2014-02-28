@@ -56,10 +56,10 @@ return array(
             'timeout' => 3600,
         ),
         'sessionCache' => array(
-            'class' => 'CApcCache',
+            'class' => 'CFileCache',
         ),
         'cache' => array(
-            'class' => 'CApcCache',
+            'class' => 'CFileCache',
         ),
         'bootstrap' => array(
             'class' => 'ext.bootstrap.components.Bootstrap',

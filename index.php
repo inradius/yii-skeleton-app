@@ -6,14 +6,14 @@ $shortcuts = $dirname . '/protected/helpers/shortcuts.php';
 
 if ($hostname == 'travisstroud.co.uk') {
     $config = $dirname . '/protected/config/production.php';
-    $yii = $dirname . '/yii/yiilite.php';
+    $yii = $dirname . '/vendor/yiisoft/yii/framework/yiilite.php';
 } elseif($hostname == 'dev.travisstroud.com' || $hostname == 'localhost') {
-    $yii = $dirname . '/yii/yii.php';
+    $yii = $dirname . '/vendor/yiisoft/yii/framework/yii.php';
     $config = $dirname . '/protected/config/local.php';
     defined('YII_DEBUG') or define('YII_DEBUG', true);
     defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', 3);
 } else {
-    $yii = $dirname . '/yii/yii.php';
+    $yii = $dirname . '/vendor/yiisoft/yii/framework/yii.php';
     $config = $dirname . '/protected/config/main.php';
     defined('YII_DEBUG') or define('YII_DEBUG', true);
     defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', 3);

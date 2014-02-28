@@ -1,5 +1,8 @@
 /protected/config/production.php
 /protected/config/local.php
+/css/*.css
+composer.phar
+composer.lock
 .idea*
 .vagrant*
 
