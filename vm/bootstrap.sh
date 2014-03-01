@@ -24,8 +24,9 @@ apt-get install -y vim
 
 a2enmod rewrite
 
-mv /etc/apache2/envvars /etc/apache2/envvars.backup
-cp /srv/vm/envvars /etc/apache2
+### Uncomment these 2 lines if you have write permission issues in the yii application
+#mv /etc/apache2/envvars /etc/apache2/envvars.backup
+#cp /srv/vm/envvars /etc/apache2
 rm -rf /var/lock/apache2
 
 mv /etc/apache2/sites-available/default /etc/apache2/sites-available/default.backup
