@@ -8,18 +8,13 @@
  * @property string $email
  * @property string $first_name
  * @property string $last_name
- * @property string $address
- * @property string $city
- * @property string $state
- * @property string $postal_code
- * @property string $phone
  * @property string $password
  * @property string $activate
  * @property string $last_login
- * @property string $password_reset
+ * @property string $pass_reset
  * @property integer $admin
- * @property integer $email_verified
- * @property integer $login_disabled
+ * @property integer $verified
+ * @property integer $disabled
  */
 class User extends CActiveRecord {
 
@@ -64,21 +59,19 @@ class User extends CActiveRecord {
             array('password, pass2', 'required', 'on' => 'register'),
             array('pass2', 'compare', 'compareAttribute' => 'password', 'on' => 'register'),
             array('verify', 'captcha', 'allowEmpty' => !CCaptcha::checkRequirements(), 'on' => 'register, forgotPassword'),
-            array('admin, email_verified, login_disabled', 'numerical', 'integerOnly' => true),
+            array('admin, verified, disabled', 'numerical', 'integerOnly' => true),
             array('email, password', 'length', 'max' => 63),
-            array('address', 'length', 'max' => 511),
-            array('phone', 'length', 'max' => 12),
             array('first_name, last_name', 'length', 'max' => 45),
-            array('password_reset', 'numerical', 'on' => 'passwordReset', 'integerOnly' => true),
+            array('pass_reset', 'numerical', 'on' => 'passwordReset', 'integerOnly' => true),
             array('password, pass2', 'application.components.validate.EPasswordStrength', 'on' => 'register'),
             array('email', 'email', 'on' => 'update, create, register'),
             array('first_name, last_name', 'application.components.validate.ENameValidator'),
             array('email', 'unique', 'on' => 'create, register'),
-            array('email, phone', 'default', 'setOnEmpty' => true), // make empty values stored as NULL
+            array('email', 'default', 'setOnEmpty' => true), // make empty values stored as NULL
             array('last_login', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, email, first_name, last_name, phone_number, super_admin, email_verified, login_disabled', 'safe', 'on' => 'search'),
+            array('id, email, first_name, last_name, admin, verified, disabled', 'safe', 'on' => 'search'),
         );
     }
 
@@ -101,18 +94,13 @@ class User extends CActiveRecord {
             'email' => 'Email',
             'first_name' => 'First Name',
             'last_name' => 'Last Name',
-            'address' => 'Address',
-            'city' => 'City',
-            'state' => 'State',
-            'postal_code' => 'Postal Code',
-            'phone' => 'Phone',
             'password' => 'Password',
             'activate' => 'Activate',
             'last_login' => 'Last Login',
-            'password_reset' => 'Password Reset',
+            'pass_reset' => 'Password Reset',
             'admin' => 'Admin',
-            'email_verified' => 'Email Verified',
-            'login_disabled' => 'Login Disabled',
+            'verified' => 'Email Verified',
+            'disabled' => 'Login Disabled',
             'pass1' => 'New Password',
             'pass2' => 'Confirm Password',
             'old_password' => 'Current Password',

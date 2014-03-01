@@ -29,10 +29,6 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
     <?php echo $form->textFieldRow($model, 'email', array('size' => 60, 'maxlength' => 63)); ?>
 
-    <?php echo $form->textFieldRow($model, 'address', array('size' => 60, 'maxlength' => 511)); ?>
-
-    <?php echo $form->textFieldRow($model, 'phone', array('size' => 12, 'maxlength' => 12)); ?>
-
     <?php if(!$model->isNewRecord): // Edit a record (password fields are not shown here, instead a link) ?>
     
         <div class="control-group form-link">
@@ -73,7 +69,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
             <?php echo $form->checkBoxRow($model, 'admin'); ?>
 
-            <?php echo $form->checkBoxRow($model, 'login_disabled'); ?>
+            <?php echo $form->checkBoxRow($model, 'disabled'); ?>
 
         <?php endif; ?>
     
