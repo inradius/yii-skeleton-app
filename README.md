@@ -28,7 +28,7 @@ mysql> create database testdrive
 mysql> exit
 $ php protected/yiic migrate up
 ```
-When prompted about applying the migrations, type `yes` and hit enter. This will create the applications tables needed for the application to function. Migrations are not in place though [#1](https://github.com/inradius/yii-skeleton-app/issues/1).
+When prompted about applying the migrations, type `yes` and hit enter. This will create the applications tables needed for the application to function.
 
 ## Extensions
 I've included some extensions that I pretty much always use. These include:
