@@ -47,7 +47,7 @@ return array(
             'connectionString' => 'mysql:host=localhost;dbname=testdrive',
             'emulatePrepare' => true,
             'username' => 'root',
-            'password' => '',
+            'password' => 'root',
             'charset' => 'utf8',
         ),
         'session' => array(
