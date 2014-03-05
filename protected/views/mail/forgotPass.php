@@ -1,1 +1,1 @@
-<p>To reset your account password, please <a href="<?php echo absUrl('user/newPassword').'?req='.$hash; ?>">click here</a>.</p>
+<p>To reset your account password, please <a href="<?php echo CHtml::link('click here', $this->createAbsoluteUrl('user/newPassword', array('req' => $hash))); ?>.</p>

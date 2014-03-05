@@ -163,7 +163,7 @@ class UserController extends Controller {
                 $model = User::model()->findByEmail($_POST['User']['email']);
                 $timestamp = time();
                 $hash = User::encrypt($model->email . $model->password . $timestamp);
-                Shared::debug($hash);
+                //Shared::debug($hash);
                 $model->pass_reset = $timestamp;
                 // save the timestamp (password reset is good for 24 hours only)
                 $model->save();
@@ -180,7 +180,7 @@ class UserController extends Controller {
                 if ($mail->Send()) {
                     $mail->ClearAddresses();
                     app()->user->setFlash('success', 'Please check your email for further instructions.');
-                    $this->redirect(array('/site/index'));
+                    $this->redirect(array('site/index'));
                 } else {
                     app()->user->setFlash('error', 'Error while sending email: ' . $mail->ErrorInfo);
                 }
@@ -190,7 +190,7 @@ class UserController extends Controller {
     }
 
     public function actionNewPassword($req) {
-        // lookup users, who requested a password change
+        // lookup users, who requested a password change in the past day
         $since = strtotime(Shared::toDatabase(time()) . " -1 day");
         $users = User::model()->findAllBySql("SELECT * FROM user WHERE pass_reset > $since");
         $found = null;
@@ -203,10 +203,10 @@ class UserController extends Controller {
         if ($found != null) {
             $model->setScenario('resetPass');
             // reset the password
-            if (isset($_POST['User'])) {
-                $model->attributes = $_POST['User'];
+            if($data = app()->request->getPost('User')) {
+                $model->attributes = $data;
                 if ($model->validate()) {
-                    $found->setPassword($_POST['User']['pass1']);
+                    $found->setPassword($data['pass1']);
                     $model->pass_reset = null;
                     if ($found->save()) {
                         app()->user->setFlash('success', 'Your password has been reset.');
