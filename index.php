@@ -1,7 +1,6 @@
 <?php
 
 $dirname = dirname(__FILE__);
-$hostname = $_SERVER['SERVER_NAME'];
 $shortcuts = $dirname . '/protected/helpers/shortcuts.php';
 
 if(file_exists($dirname . '/protected/config/production.php')) {
