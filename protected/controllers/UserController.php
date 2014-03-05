@@ -135,10 +135,10 @@ class UserController extends Controller {
         if (isset($user->id) && $user->id === $id || app()->user->isAdmin()) {
             $model = $this->loadModel($id);
             $model->setScenario('changePassword');
-            if (isset($_POST['User'])) {
-                $model->attributes = $_POST['User'];
+            if($data = app()->request->getPost('User')) {
+                $model->attributes = $data;
                 if ($model->validate()) {
-                    $model->password = crypt($_POST['User']['pass1'], Randomness::blowfishSalt());
+                    $model->password = CPasswordHelper::hashPassword($data['pass1']);
                     if ($model->save()) {
                         app()->user->setFlash('success', 'Saved new password!');
                         $this->redirect(array('update', 'id' => $model->id));
@@ -162,9 +162,9 @@ class UserController extends Controller {
             if ($model->validate()) {
                 $model = User::model()->findByEmail($_POST['User']['email']);
                 $timestamp = time();
-                $hash = crypt($model->email . $model->password . $timestamp, Randomness::blowfishSalt());
+                $hash = User::encrypt($model->email . $model->password . $timestamp);
                 Shared::debug($hash);
-                $model->password_reset = $timestamp;
+                $model->pass_reset = $timestamp;
                 // save the timestamp (password reset is good for 24 hours only)
                 $model->save();
 
@@ -192,10 +192,10 @@ class UserController extends Controller {
     public function actionNewPassword($req) {
         // lookup users, who requested a password change
         $since = strtotime(Shared::toDatabase(time()) . " -1 day");
-        $users = User::model()->findAllBySql("SELECT * FROM user WHERE password_reset > $since");
+        $users = User::model()->findAllBySql("SELECT * FROM user WHERE pass_reset > $since");
         $found = null;
         foreach ($users as $model) {
-            if ($req === crypt($model->email . $model->password . $model->password_reset, $req)) {
+            if ($req === User::encrypt($model->email . $model->password . $model->pass_reset)) {
                 $found = $model;
                 break;
             }
@@ -207,9 +207,10 @@ class UserController extends Controller {
                 $model->attributes = $_POST['User'];
                 if ($model->validate()) {
                     $found->setPassword($_POST['User']['pass1']);
+                    $model->pass_reset = null;
                     if ($found->save()) {
                         app()->user->setFlash('success', 'Your password has been reset.');
-                        $this->redirect(app()->user->getHomeUrl());
+                        $this->redirect(array('site/index'));
                     }
                 }
             }
