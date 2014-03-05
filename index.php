@@ -4,19 +4,18 @@ $dirname = dirname(__FILE__);
 $hostname = $_SERVER['SERVER_NAME'];
 $shortcuts = $dirname . '/protected/helpers/shortcuts.php';
 
-if ($hostname == 'travisstroud.co.uk') {
+if(file_exists($dirname . '/protected/config/production.php')) {
     $config = $dirname . '/protected/config/production.php';
     $yii = $dirname . '/vendor/yiisoft/yii/framework/yiilite.php';
-} elseif($hostname == 'dev.travisstroud.com' || $hostname == 'localhost') {
-    $yii = $dirname . '/vendor/yiisoft/yii/framework/yii.php';
-    $config = $dirname . '/protected/config/local.php';
-    defined('YII_DEBUG') or define('YII_DEBUG', true);
-    defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', 3);
 } else {
-    $yii = $dirname . '/vendor/yiisoft/yii/framework/yii.php';
-    $config = $dirname . '/protected/config/main.php';
     defined('YII_DEBUG') or define('YII_DEBUG', true);
     defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', 3);
+    $yii = $dirname . '/vendor/yiisoft/yii/framework/yii.php';
+    if(file_exists($dirname . '/protected/config/dev.php')) {
+        $config = $dirname . '/protected/config/dev.php';
+    } else {
+        $config = $dirname . '/protected/config/main.php';
+    }
 }
 
 require_once($yii);
