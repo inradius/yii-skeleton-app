@@ -7,26 +7,52 @@ $this->breadcrumbs = array('Login');
 
 <p>Please fill out the following form with your login credentials:</p>
 
-<?php
-$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-    'id' => 'login-form',
-    'type' => 'horizontal',
-        ));
-?>
+<?php $form = $this->beginWidget('CActiveForm', array('htmlOptions' => array('class' => 'form-horizontal', 'role' => 'form'))); ?>
 
-<fieldset>
-    <?php echo $form->textFieldRow($model, 'username'); ?>
-    <?php echo $form->passwordFieldRow($model, 'password'); ?>
-    <?php echo $form->checkboxRow($model, 'rememberMe'); ?>
-</fieldset>
+    <div class="form-group<?php if($form->error($model, 'username')) echo ' has-error'; ?>">
+        <?php echo $form->label($model, 'username', array('class' => 'col-md-2 control-label')); ?>
+        <div class="col-md-5">
+            <?php echo $form->textField($model, 'username', array(
+                'class' => 'form-control',
+                'size' => 45,
+                'maxlength' => 45,
+            )); ?>
+        </div>
+    </div>
+
+    <div class="form-group<?php if($form->error($model, 'password')) echo ' has-error'; ?>">
+        <?php echo $form->label($model, 'password', array('class' => 'col-md-2 control-label')); ?>
+        <div class="col-md-5">
+            <?php echo $form->passwordField($model, 'password', array(
+                'class' => 'form-control',
+                'size' => 45,
+                'maxlength' => 45,
+            )); ?>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+                <?php echo $form->checkBox($model,'rememberMe'); ?>
+                <?php echo $form->label($model,'rememberMe'); ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <?php echo CHtml::submitButton('Sign in', array('class' => 'btn btn-default')); ?>
+        </div>
+    </div>
 
 <div class="control-group form-link"><a href="<?php echo url('user/forgotPassword'); ?>">Forgot password?</a></div>
 
 <div class="form-actions">
-    <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'submit', 'icon' => 'user', 'label' => 'Login')); ?>
-    <?php $this->widget('application.components.widgets.FBConnect'); ?>
-    <?php $this->widget('application.components.widgets.GConnect'); ?>
-    <?php $this->widget('application.components.widgets.LiveConnect'); ?>
+    <?php //$this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'submit', 'icon' => 'user', 'label' => 'Login')); ?>
+    <?php //$this->widget('application.components.widgets.FBConnect'); ?>
+    <?php //$this->widget('application.components.widgets.GConnect'); ?>
+    <?php //$this->widget('application.components.widgets.LiveConnect'); ?>
 </div>
 
 <div id="processing" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="processingLabel" aria-hidden="true">

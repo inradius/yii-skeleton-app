@@ -65,9 +65,9 @@ if(app()->user->hasFlash('success')) {
 
                 <?php
                 if(isset($this->breadcrumbs)){
-                    /*$this->widget('bootstrap.widgets.TbBreadcrumbs', array(
+                    $this->widget('zii.widgets.CBreadcrumbs', array(
                         'links' => $this->breadcrumbs,
-                    ));*/
+                    ));
                 }
                 ?>
 
