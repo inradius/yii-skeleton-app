@@ -11,19 +11,49 @@ if(app()->user->hasFlash('success')) {
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="language" content="en" />
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title><?php echo h($this->pageTitle); ?></title>
-        <?php app()->bootstrap->register(true); ?>
+
+        <?php cs()->registerCoreScript('jquery', CClientScript::POS_END); ?>
+        <?php $this->widget('app.widgets.bootstrap.bootstrap'); ?>
         <link rel="stylesheet" type="text/css" href="<?php echo app()->request->baseUrl; ?>/css/system.css" media="screen, projection" />
     </head>
 
     <body>
         
         <div id="fb-root"></div>
+
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-6">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#"><?php echo app()->name; ?></a>
+                </div>
+                <?php
+                $this->widget('zii.widgets.CMenu', array(
+                    'items'=>array(
+                        array('label'=>'Home', 'url'=>array('site/index')),
+                        array('label'=>'Products', 'url'=>array('product/index'), 'items'=>array(
+                            array('label'=>'New Arrivals', 'url'=>array('product/new', 'tag'=>'new')),
+                            array('label'=>'Most Popular', 'url'=>array('product/index', 'tag'=>'popular')),
+                        )),
+                        array('label'=>'Login', 'url'=>array('site/login'), 'visible'=>Yii::app()->user->isGuest),
+                    ),
+                ));
+                ?>
+            </div>
+        </nav>
         
         <?php
+        /*
         $this->widget('bootstrap.widgets.TbNavbar', array(
             'brand' => h(app()->name),
             'brandUrl' => bu(),
@@ -66,6 +96,7 @@ if(app()->user->hasFlash('success')) {
                 ):''),
             ),
         ));
+        */
         ?>
 
         <div id="page">
@@ -74,18 +105,18 @@ if(app()->user->hasFlash('success')) {
 
                 <?php
                 if(isset($this->breadcrumbs)){
-                    $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
+                    /*$this->widget('bootstrap.widgets.TbBreadcrumbs', array(
                         'links' => $this->breadcrumbs,
-                    ));
+                    ));*/
                 }
                 ?>
 
                 <?php if(app()->user->hasFlash('info')) {
-                    $this->widget('bootstrap.widgets.TbAlert', array(
+                    /*$this->widget('bootstrap.widgets.TbAlert', array(
                         'block' => true,
                         'fade' => true,
                         'closeText' => '&times;',
-                    ));
+                    ));*/
                 } ?>
 
                 <?php echo $content; ?>
