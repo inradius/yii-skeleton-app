@@ -17,7 +17,6 @@ $columns = array(
     array('filter' => false, 'name' => 'id', 'header' => 'ID'),
     array('filter' => false, 'name' => 'first_name', 'header' => 'Name', 'type' => 'raw', 'value' => 'User::model()->findByPk($data->id)->getFullName()'),
     array('name' => 'email', 'header' => 'Email'),
-    array('filter' => false, 'name' => 'phone', 'header' => 'Phone', 'type' => 'raw', 'value' => 'Shared::formatPhone($data->phone)'),
     array('filter' => false, 'name' => 'last_login', 'header' => 'Last Login', 'type' => 'raw', 'value' => 'Shared::formatShortUSDate($data->last_login)'),
 );
 
