@@ -26,78 +26,38 @@ if(app()->user->hasFlash('success')) {
         
         <div id="fb-root"></div>
 
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-6">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#"><?php echo app()->name; ?></a>
+                    <?php echo CHtml::link(app()->name, array('site/index'), array('class' => 'navbar-brand')); ?>
                 </div>
-                <?php
-                $this->widget('zii.widgets.CMenu', array(
-                    'items'=>array(
-                        array('label'=>'Home', 'url'=>array('site/index')),
-                        array('label'=>'Products', 'url'=>array('product/index'), 'items'=>array(
-                            array('label'=>'New Arrivals', 'url'=>array('product/new', 'tag'=>'new')),
-                            array('label'=>'Most Popular', 'url'=>array('product/index', 'tag'=>'popular')),
-                        )),
-                        array('label'=>'Login', 'url'=>array('site/login'), 'visible'=>Yii::app()->user->isGuest),
-                    ),
-                ));
-                ?>
+                <div class="collapse navbar-collapse">
+                    <?php
+                    $this->widget('zii.widgets.CMenu', array(
+                        'htmlOptions' => array('class' => 'nav navbar-nav'),
+                        'items' => array(
+                            array('label' => 'Home', 'url' => array('site/index')),
+                            array('label' => 'Profile', 'url' => array('user/update', 'id' => app()->user->id), 'visible' => !app()->user->isGuest()),
+                            array('label' => 'Users', 'url' => array('user/index'), 'visible' => app()->user->isAdmin()),
+                        ),
+                    ));
+
+                    if(app()->user->isGuest()) {
+                        echo CHtml::link('Login', array('site/login'), array('class' => 'btn btn-success navbar-btn navbar-right'));
+                        echo CHtml::link('Register', array('user/create'), array('class' => 'btn btn-info navbar-btn navbar-right', 'style' => 'margin-right: 5px'));
+                    } else {
+                        echo CHtml::link('Logout', array('site/logout'), array('class' => 'btn btn-warning navbar-btn navbar-right'));
+                    }
+                    ?>
+                </div><!--/.nav-collapse -->
             </div>
-        </nav>
-        
-        <?php
-        /*
-        $this->widget('bootstrap.widgets.TbNavbar', array(
-            'brand' => h(app()->name),
-            'brandUrl' => bu(),
-            'collapse' => true,
-            'items'=>array(
-                array(
-                    'class'=>'bootstrap.widgets.TbMenu',
-                    'items'=>array(
-                        array('label' => 'Home', 'url' => array('/site/index')),
-                        array('label' => 'Profile', 'url' => array('/user/update', 'id' => app()->user->id), 'visible' => !app()->user->isGuest()),
-                        array('label' => 'Users', 'url' => array('/user/index'), 'visible' => app()->user->isAdmin()),
-                    ),
-                ),
-                app()->user->isGuest?
-                    array(
-                        'class' => 'bootstrap.widgets.TbButton',
-                        'htmlOptions' => array('class' => 'pull-right'),
-                        'label'=>'Login',
-                        'type'=>'success',
-                        'size'=>'normal',
-                        'url'=>array('/site/login'),
-                    )
-                :
-                    array(
-                        'class' => 'bootstrap.widgets.TbButton',
-                        'htmlOptions' => array('class' => 'pull-right'),
-                        'label'=>'Logout',
-                        'type'=>'warning',
-                        'size'=>'normal',
-                        'url'=>array('/site/logout'),
-                    )
-                ,
-                (app()->user->isGuest?array(
-                    'class' => 'bootstrap.widgets.TbButton',
-                    'htmlOptions' => array('class' => 'pull-right', 'style' => 'margin-right: 5px'),
-                    'label'=>'Register',
-                    'type'=>'info',
-                    'size'=>'normal',
-                    'url'=>array('/user/create'),
-                ):''),
-            ),
-        ));
-        */
-        ?>
+        </div>
 
         <div id="page">
 
