@@ -17,8 +17,6 @@ if(app()->user->hasFlash('success')) {
 
         <title><?php echo h($this->pageTitle); ?></title>
 
-        <?php cs()->registerCoreScript('jquery', CClientScript::POS_END); ?>
-        <?php $this->widget('app.widgets.Bootstrap.Bootstrap'); ?>
         <link rel="stylesheet" type="text/css" href="<?php echo app()->request->baseUrl; ?>/css/system.css" media="screen, projection" />
     </head>
 

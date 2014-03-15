@@ -23,12 +23,29 @@
                     "type": "zip"
                 }
             }
+        },
+        {
+            "type": "package",
+            "package": {
+                "version": "4.0.3",
+                "name": "FortAwesome/Font-Awesome",
+                "source": {
+                    "url": "https://github.com/FortAwesome/Font-Awesome.git",
+                    "type": "git",
+                    "reference": "master"
+                },
+                "dist": {
+                    "url": "https://github.com/FortAwesome/Font-Awesome/zipball/master",
+                    "type": "zip"
+                }
+            }
         }
     ],
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.2",
         "yiisoft/yii": "1.1.*",
-        "twbs/bootstrap": "*"
+        "twbs/bootstrap": "3.1.*",
+        "FortAwesome/Font-Awesome": "4.0.*"
     }
 }
