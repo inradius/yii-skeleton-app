@@ -4,7 +4,7 @@ $this->pageTitle = app()->name . ' - Login';
 $this->breadcrumbs = array('Login');
 ?>
 
-<div class="col-md-5 col-md-offset-3">
+<div class="col-md-4 col-md-offset-4">
     <h1 class="page-header">Login</h1>
 
     <?php $form = $this->beginWidget('CActiveForm', array('htmlOptions' => array('role' => 'form'))); ?>
