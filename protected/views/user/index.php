@@ -31,10 +31,9 @@ $dataArray = array(
     'selectableRows'    => 2,
 );
 ?>
-<div class="row">
-    <div class="col-md-12">
-        <h1 class="page-header">Users</h1>
 
-        <?php $this->widget('app.widgets.GridView.GridView', $dataArray); ?>
-    </div>
+<div class="col-md-12">
+    <h1 class="page-header">Users</h1>
+
+    <?php $this->widget('app.widgets.GridView.GridView', $dataArray); ?>
 </div>
