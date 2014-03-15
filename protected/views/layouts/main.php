@@ -9,7 +9,7 @@ if(app()->user->hasFlash('success')) {
 
 ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -61,8 +61,11 @@ if(app()->user->hasFlash('success')) {
 
             <div class="container main-holder">
 
+                <div class="row">
+
                 <?php
                 if(isset($this->breadcrumbs)){
+                    echo CHtml::openTag('div', array('class' => 'col-md-12'));
                     $this->widget('zii.widgets.CBreadcrumbs', array(
                         'links'                 => $this->breadcrumbs,
                         'tagName'               => 'ol',
@@ -72,17 +75,20 @@ if(app()->user->hasFlash('success')) {
                         'activeLinkTemplate'    => CHtml::tag('li', array(), CHtml::link('{label}', '{url}')),
                         'homeLink'              => CHtml::tag('li', array(), CHtml::link('Home', app()->homeUrl)),
                     ));
+                    echo CHtml::closeTag('div');
                 }
 
                 if(app()->user->hasFlash('info')) {
                     echo CHtml::tag(
                         'div',
                         array('class' => 'alert alert-info alert-dismissable'),
-                        CHtml::htmlButton('&times;', array('class' => 'close', 'data-dismiss' => 'alert', 'aria-hidden' => 'true')) . "\n" . app()->user->getFlash('info')
+                        CHtml::htmlButton('&times;', array('class' => 'close', 'data-dismiss' => 'alert', 'aria-hidden' => 'true')) . app()->user->getFlash('info')
                     );
                 }
 
                 echo $content; ?>
+
+                </div>
 
             </div>
             
