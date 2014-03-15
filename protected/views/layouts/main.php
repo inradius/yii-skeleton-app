@@ -66,7 +66,13 @@ if(app()->user->hasFlash('success')) {
                 <?php
                 if(isset($this->breadcrumbs)){
                     $this->widget('zii.widgets.CBreadcrumbs', array(
-                        'links' => $this->breadcrumbs,
+                        'links'                 => $this->breadcrumbs,
+                        'tagName'               => 'ol',
+                        'separator'             => '',
+                        'htmlOptions'           => array('class' => 'breadcrumb'),
+                        'inactiveLinkTemplate'  => CHtml::tag('li', array('class' => 'active'), '{label}'),
+                        'activeLinkTemplate'    => CHtml::tag('li', array(), CHtml::link('{label}', '{url}')),
+                        'homeLink'              => CHtml::tag('li', array(), CHtml::link('Home', app()->homeUrl)),
                     ));
                 }
                 ?>
