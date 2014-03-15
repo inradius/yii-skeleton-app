@@ -15,9 +15,9 @@ $this->menu = array(
 
 $columns = array(
     array('id' => 'selected', 'class' => 'CCheckBoxColumn'),
-    array('filter' => false, 'name' => 'first_name', 'header' => 'Name', 'type' => 'raw', 'value' => 'User::model()->findByPk($data->id)->getFullName()'),
-    array('name' => 'email', 'header' => 'Email'),
-    array('filter' => false, 'name' => 'last_login', 'header' => 'Last Login', 'type' => 'raw', 'value' => 'Shared::formatShortUSDate($data->last_login)'),
+    array('filter' => false, 'name' => 'first_name', 'header' => 'Name', 'type' => 'raw', 'value' => 'User::model()->findByPk($data->id)->getFullName()', 'htmlOptions' => array('style' => 'width: 30%')),
+    array('name' => 'email', 'header' => 'Email', 'htmlOptions' => array('style' => 'width: 45%')),
+    array('filter' => false, 'name' => 'last_login', 'header' => 'Last Login', 'type' => 'raw', 'value' => 'Shared::formatShortUSDate($data->last_login)', 'htmlOptions' => array('style' => 'width: 25%')),
     array('type' => 'raw', 'value' => array($this, 'renderButtons')),
 );
 
