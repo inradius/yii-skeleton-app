@@ -4,13 +4,12 @@ $this->pageTitle = app()->name . ' - Login';
 $this->breadcrumbs = array('Login');
 ?>
 
-<div class="col-md-12">
+<div class="col-md-5 col-md-offset-3">
     <h1 class="page-header">Login</h1>
-    <p>Please fill out the following form with your login credentials.</p>
 
-    <?php $form = $this->beginWidget('CActiveForm', array('htmlOptions' => array('role' => 'form', 'class' => 'row'))); ?>
+    <?php $form = $this->beginWidget('CActiveForm', array('htmlOptions' => array('role' => 'form'))); ?>
 
-    <div class="col-md-5 col-md-offset-3 form-group<?php if($form->error($model, 'username')) echo ' has-error'; ?>">
+    <div class="form-group<?php if($form->error($model, 'username')) echo ' has-error'; ?>">
         <?php echo $form->label($model, 'username'); ?>
         <?php echo $form->textField($model, 'username', array(
             'class' => 'form-control',
@@ -19,7 +18,7 @@ $this->breadcrumbs = array('Login');
         )); ?>
     </div>
 
-    <div class="col-md-5 col-md-offset-3 form-group<?php if($form->error($model, 'password')) echo ' has-error'; ?>">
+    <div class="form-group<?php if($form->error($model, 'password')) echo ' has-error'; ?>">
         <?php echo $form->label($model, 'password'); ?>
         <?php echo $form->passwordField($model, 'password', array(
             'class' => 'form-control',
@@ -28,20 +27,16 @@ $this->breadcrumbs = array('Login');
         )); ?>
     </div>
 
-    <div class="col-md-5 col-md-offset-3">
-        <div class="checkbox row">
-            <div class="col-md-6">
-                <label><?php echo $form->checkBox($model,'rememberMe', array('class' => 'checkbox')); ?><?php echo $model->getAttributeLabel('rememberMe'); ?></label>
-            </div>
-            <div class="col-md-6">
-                <?php echo CHtml::link('Forgot Password?', array('user/forgotPassword'), array('class' => 'pull-right')); ?>
-            </div>
+    <div class="checkbox">
+        <div class="col-md-6">
+            <label><?php echo $form->checkBox($model,'rememberMe'); ?><?php echo $model->getAttributeLabel('rememberMe'); ?></label>
+        </div>
+        <div class="col-md-6">
+            <?php echo CHtml::link('Forgot Password?', array('user/forgotPassword'), array('class' => 'pull-right')); ?>
         </div>
     </div>
 
-    <div class="col-md-5 col-md-offset-3">
-        <?php echo CHtml::submitButton('Sign in', array('class' => 'btn btn-default')); ?>
-    </div>
+    <?php echo CHtml::submitButton('Login', array('class' => 'btn btn-primary btn-block')); ?>
 
 <!--
     <div class="form-actions">

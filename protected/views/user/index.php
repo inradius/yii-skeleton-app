@@ -14,28 +14,24 @@ $this->menu = array(
 );
 
 $columns = array(
-    array('filter' => false, 'name' => 'id', 'header' => 'ID'),
+    array('id' => 'selected', 'class' => 'CCheckBoxColumn'),
     array('filter' => false, 'name' => 'first_name', 'header' => 'Name', 'type' => 'raw', 'value' => 'User::model()->findByPk($data->id)->getFullName()'),
     array('name' => 'email', 'header' => 'Email'),
     array('filter' => false, 'name' => 'last_login', 'header' => 'Last Login', 'type' => 'raw', 'value' => 'Shared::formatShortUSDate($data->last_login)'),
+    array('type' => 'raw', 'value' => array($this, 'renderButtons')),
 );
 
-//if (app()->user->isAdmin()) {
-    $columns[] = array(
-        'class' => 'bootstrap.widgets.TbButtonColumn',
-        'template' => '{update} {delete}',
-    );
-//}
-
 $dataArray = array(
-    'type' => 'bordered',
-    'dataProvider' => $dataProvider,
-    'filter' => $model,
-    'template' => "{items}\n{pager}",
-    'columns' => $columns,
+    'id'                => 'user-gridview',
+    'filter'            => $model,
+    'columns'           => $columns,
+    'template'          => "{items}\n{pager}",
+    'dataProvider'      => $dataProvider,
+    'itemsCssClass'     => 'table table-bordered table-striped table-hover',
+    'selectableRows'    => 2,
 );
 ?>
 
 <h1>Users</h1>
 
-<?php $this->widget('bootstrap.widgets.TbGridView', $dataArray); ?>
+<?php $this->widget('app.widgets.GridView.GridView', $dataArray); ?>

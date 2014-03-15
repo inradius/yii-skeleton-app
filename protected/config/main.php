@@ -33,7 +33,7 @@ return array(
         ),
         'user' => array(
             'class' => 'WebUser',
-            'allowAutoLogin' => false,
+            'allowAutoLogin' => true,
         ),
         'urlManager' => array(
             'urlFormat' => 'path',
