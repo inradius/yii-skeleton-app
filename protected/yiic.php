@@ -1,7 +1,16 @@
 <?php
 
-// change the following paths if necessary
-$yiic=dirname(__FILE__).'/../vendor/yiisoft/yii/framework/yiic.php';
-$config=dirname(__FILE__).'/config/console.php';
+$dirname = dirname(__FILE__);
+$yiic = $dirname . '/../vendor/yiisoft/yii/framework/yiic.php';
+
+if(file_exists($dirname . '/config/console-production.php')) {
+    $config = $dirname . '/config/console-production.php';
+} else {
+    if(file_exists($dirname . '/config/console-dev.php')) {
+        $config = $dirname . '/config/console-dev.php';
+    } else {
+        $config = $dirname . '/config/console.php';
+    }
+}
 
 require_once($yiic);
