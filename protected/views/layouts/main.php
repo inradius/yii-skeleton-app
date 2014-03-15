@@ -73,17 +73,16 @@ if(app()->user->hasFlash('success')) {
                         'homeLink'              => CHtml::tag('li', array(), CHtml::link('Home', app()->homeUrl)),
                     ));
                 }
-                ?>
 
-                <?php if(app()->user->hasFlash('info')) {
-                    /*$this->widget('bootstrap.widgets.TbAlert', array(
-                        'block' => true,
-                        'fade' => true,
-                        'closeText' => '&times;',
-                    ));*/
-                } ?>
+                if(app()->user->hasFlash('info')) {
+                    echo CHtml::tag(
+                        'div',
+                        array('class' => 'alert alert-info alert-dismissable'),
+                        CHtml::htmlButton('&times;', array('class' => 'close', 'data-dismiss' => 'alert', 'aria-hidden' => 'true')) . "\n" . app()->user->getFlash('info')
+                    );
+                }
 
-                <?php echo $content; ?>
+                echo $content; ?>
 
             </div>
             
