@@ -21,7 +21,7 @@ $this->breadcrumbs = array(
 
         <div class="form-group<?php if($form->error($model, 'pass1')) echo ' has-error'; ?>">
             <?php echo $form->label($model, 'pass1'); ?>
-            <?php echo $form->textField($model, 'pass1', array(
+            <?php echo $form->passwordField($model, 'pass1', array(
                 'class' => 'form-control',
                 'maxlength' => 63,
             )); ?>
@@ -29,7 +29,7 @@ $this->breadcrumbs = array(
 
         <div class="form-group<?php if($form->error($model, 'pass2')) echo ' has-error'; ?>">
             <?php echo $form->label($model, 'pass2'); ?>
-            <?php echo $form->textField($model, 'pass2', array(
+            <?php echo $form->passwordField($model, 'pass2', array(
                 'class' => 'form-control',
                 'maxlength' => 63,
             )); ?>

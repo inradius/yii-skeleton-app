@@ -10,7 +10,7 @@ if(app()->user->isAdmin()){
         array('label' => 'Create User', 'url' => array('create'), 'active' => true),
     );
 } else {
-    $pageName = 'Register User';
+    $pageName = 'Register';
 }
 
 $this->pageTitle = app()->name . ' - ' . $pageName;
@@ -19,6 +19,4 @@ $this->breadcrumbs = array(
 );
 ?>
 
-<h1><?php echo $pageName; ?></h1>
-
-<?php echo $this->renderPartial('_form', array('model' => $model)); ?>
+<?php echo $this->renderPartial('_form', array('model' => $model, 'pageName' => $pageName)); ?>

@@ -57,7 +57,7 @@ class User extends CActiveRecord {
             array('pass1, pass2', 'required', 'on' => 'resetPass'),
             array('pass2', 'compare', 'compareAttribute' => 'pass1', 'on' => 'resetPass, changePassword'),
             array('pass1, pass2', 'application.components.validate.EPasswordStrength', 'on' => 'resetPass, changePassword'),
-            array('password, pass2', 'required', 'on' => 'register'),
+            array('username, password, pass2', 'required', 'on' => 'register'),
             array('pass2', 'compare', 'compareAttribute' => 'password', 'on' => 'register'),
             array('verify', 'captcha', 'allowEmpty' => !CCaptcha::checkRequirements(), 'on' => 'register, forgotPassword'),
             array('admin, verified, disabled', 'numerical', 'integerOnly' => true),
