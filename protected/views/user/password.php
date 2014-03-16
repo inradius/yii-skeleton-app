@@ -25,36 +25,42 @@ $this->menu=array(
 );
 ?>
 
-<h1>Change <?php echo $model->email; ?> Password</h1>
+<div class="col-md-12">
+    <h1  class="page-header">Change <?php echo $model->username; ?> Password</h1>
 
-<p>Fields with <span class="required">*</span> are required.</p>
-
-    <?php
-    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-        'id' => 'changePass-form',
-        'type' => 'horizontal',
-        'enableAjaxValidation' => false,
-    ));
-    ?>
+<?php $form = $this->beginWidget('CActiveForm', array('htmlOptions' => array('role' => 'form'))); ?>
 
     <?php //echo $form->errorSummary($model); ?>
 
-    <fieldset>
-
         <?php if(!app()->user->isAdmin()): ?>
 
-            <?php echo $form->passwordFieldRow($model, 'old_password', array('size' => 60, 'maxlength' => 63)); ?>
+            <div class="form-group<?php if($form->error($model, 'old_password')) echo ' has-error'; ?>">
+                <?php echo $form->label($model, 'old_password'); ?>
+                <?php echo $form->passwordField($model, 'old_password', array(
+                    'class' => 'form-control',
+                    'maxlength' => 63,
+                )); ?>
+            </div>
 
         <?php endif; ?>
 
-        <?php echo $form->passwordFieldRow($model, 'pass1', array('size' => 60, 'maxlength' => 63)); ?>
+        <div class="form-group<?php if($form->error($model, 'pass1')) echo ' has-error'; ?>">
+            <?php echo $form->label($model, 'pass1'); ?>
+            <?php echo $form->passwordField($model, 'pass1', array(
+                'class' => 'form-control',
+                'maxlength' => 63,
+            )); ?>
+        </div>
 
-        <?php echo $form->passwordFieldRow($model, 'pass2', array('size' => 60, 'maxlength' => 63)); ?>
+        <div class="form-group<?php if($form->error($model, 'pass2')) echo ' has-error'; ?>">
+            <?php echo $form->label($model, 'pass2'); ?>
+            <?php echo $form->passwordField($model, 'pass2', array(
+                'class' => 'form-control',
+                'maxlength' => 63,
+            )); ?>
+        </div>
 
-    </fieldset>
-
-    <div class="form-actions">
-        <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'label'=>'Change Password')); ?>
-    </div>
+    <?php echo CHtml::submitButton('Change Password', array('class' => 'btn btn-primary btn-block')); ?>
     
     <?php $this->endWidget(); ?>
+</div>

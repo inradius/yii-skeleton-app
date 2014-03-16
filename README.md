@@ -32,8 +32,6 @@ When prompted about applying the migrations, type `yes` and hit enter. This will
 
 ## Extensions
 I've included some extensions that I pretty much always use. These include:
-* Twitter (Yii) Bootstrap ([Bitbucket](https://bitbucket.org/Crisu83/yii-bootstrap))
-* Font Awesome ([GitHub](https://github.com/FortAwesome/Font-Awesome))
 * Notify Bar ([GitHub](https://github.com/dknight/jQuery-Notify-bar))
 * PHPMailer (YiiMailer) ([GitHub](https://github.com/vernes/YiiMailer))
 * Facebook PHP SDK ([GitHub](https://github.com/splashlab/yii-facebook-opengraph))

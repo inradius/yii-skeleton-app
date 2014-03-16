@@ -1,10 +1,11 @@
 <?php
 
-// uncomment the following to define a path alias
-Yii::setPathOfAlias('bootstrap', dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'extensions/bootstrap');
-// This is the main Web application configuration. Any writable
-// CWebApplication properties can be configured here.
+$appRoot = dirname(__FILE__) . DIRECTORY_SEPARATOR . '..';
+
 return array(
+    'aliases' => array(
+        'app' => realpath($appRoot . '/extensions/app'),
+    ),
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
     'name' => 'Yii Skeleton App',
     'preload' => array('app', 'less', 'log'),
@@ -32,7 +33,7 @@ return array(
         ),
         'user' => array(
             'class' => 'WebUser',
-            'allowAutoLogin' => false,
+            'allowAutoLogin' => true,
         ),
         'urlManager' => array(
             'urlFormat' => 'path',
@@ -60,9 +61,6 @@ return array(
         ),
         'cache' => array(
             'class' => 'CFileCache',
-        ),
-        'bootstrap' => array(
-            'class' => 'ext.bootstrap.components.Bootstrap',
         ),
         'errorHandler' => array(
             // use 'site/error' action to display errors

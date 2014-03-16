@@ -7,38 +7,41 @@ $this->breadcrumbs = array(
 );
 ?>
 
-<h1>Reset Password</h1>
+<div class="col-md-4 col-md-offset-4">
 
-<?php if (!$model->isNewRecord): ?>
+    <h1 class="page-header">Reset Password</h1>
 
-    <p>Please provide your desired password in the fields below to complete the password reset.</p>
+    <?php if (!$model->isNewRecord): ?>
 
-    <?php
-    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-        'id' => 'reset-form',
-        'type' => 'horizontal',
-        'focus' => array($model, 'pass1'),
-    ));
-    ?>
+        <p>Please provide your desired password in the fields below to complete the password reset.</p>
 
-    <?php //echo $form->errorSummary($model); ?>
-    
-    <fieldset>
+        <?php $form = $this->beginWidget('CActiveForm', array('htmlOptions' => array('role' => 'form'), 'focus' => array($model, 'pass1'))); ?>
 
-        <?php echo $form->passwordFieldRow($model, 'pass1', array('maxlength' => 63)); ?>
+        <?php //echo $form->errorSummary($model); ?>
 
-        <?php echo $form->passwordFieldRow($model, 'pass2', array('maxlength' => 63)); ?>
-        
-    </fieldset>
-    
-    <div class="form-actions">
-        <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'label'=>'Reset Password')); ?>
-    </div>
+        <div class="form-group<?php if($form->error($model, 'pass1')) echo ' has-error'; ?>">
+            <?php echo $form->label($model, 'pass1'); ?>
+            <?php echo $form->passwordField($model, 'pass1', array(
+                'class' => 'form-control',
+                'maxlength' => 63,
+            )); ?>
+        </div>
 
-    <?php $this->endWidget(); ?>
+        <div class="form-group<?php if($form->error($model, 'pass2')) echo ' has-error'; ?>">
+            <?php echo $form->label($model, 'pass2'); ?>
+            <?php echo $form->passwordField($model, 'pass2', array(
+                'class' => 'form-control',
+                'maxlength' => 63,
+            )); ?>
+        </div>
 
-<?php else: ?>
+        <?php echo CHtml::submitButton('Reset Password', array('class' => 'btn btn-primary btn-block', 'style' => 'margin-top:10px;')); ?>
 
-    <p>Please check your email for instructions on resetting your account password. The email was sent to <code><?php echo $model->email_address; ?></code>.</p>
+        <?php $this->endWidget(); ?>
 
-<?php endif; ?>
+    <?php else: ?>
+
+        <p>Please check your email for instructions on resetting your account password. The email was sent to <code><?php echo $model->email_address; ?></code>.</p>
+
+    <?php endif; ?>
+</div>

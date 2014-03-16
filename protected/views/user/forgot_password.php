@@ -7,37 +7,37 @@ $this->breadcrumbs = array(
 );
 ?>
 
-<h1>Forgot Password</h1>
+<div class="col-md-4 col-md-offset-4">
 
-<p>Please provide your email address in the field below to reset your password.</p>
+    <h1 class="page-header">Forgot Password</h1>
 
-<?php
-$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-    'id' => 'user-form',
-    'type' => 'horizontal',
-    'focus' => array($model, 'email'),
-));
-?>
+    <?php $form = $this->beginWidget('CActiveForm', array('htmlOptions' => array('role' => 'form'))); ?>
 
-<?php //echo $form->errorSummary($model); ?>
+    <?php //echo $form->errorSummary($model); ?>
 
-<fieldset>
+    <div class="form-group<?php if($form->error($model, 'email')) echo ' has-error'; ?>">
+        <?php echo $form->label($model, 'email'); ?>
+        <?php echo $form->textField($model, 'email', array(
+            'class' => 'form-control',
+            'placeholder' => 'email address'
+        )); ?>
+    </div>
 
-    <?php echo $form->textFieldRow($model, 'email', array('autocomplete' => 'off', 'placeholder' => 'email address')); ?>
-
-    <div class="control-group ">
-        <?php echo CHtml::activeLabel($model, 'verify', array('required' => true, 'class' => 'control-label')); ?>
-        <div class="controls">
-            <?php echo $form->textField($model, 'verify', array('class' => 'input-small')); ?>
-            <?php $this->widget('CCaptcha', array('clickableImage' => true, 'showRefreshButton' => false, 'imageOptions' => array('style' => 'vertical-align: top; margin-top: -10px; cursor: pointer;'))); ?>
-            <?php echo $form->error($model, 'verify'); ?>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group<?php if($form->error($model, 'verify')) echo ' has-error'; ?>">
+                <?php echo CHtml::activeLabel($model, 'verify', array('required' => true)); ?>
+                <?php echo $form->textField($model, 'verify', array(
+                    'class' => 'form-control',
+                )); ?>
+            </div>
+        </div>
+        <div class="col-md-6" style="text-align: center;">
+            <?php $this->widget('CCaptcha', array('clickableImage' => true, 'showRefreshButton' => false, 'imageOptions' => array('style' => 'margin-top: 10px; cursor: pointer;'))); ?>
         </div>
     </div>
 
-</fieldset>
+    <?php echo CHtml::submitButton('Request Reset', array('class' => 'btn btn-primary btn-block', 'style' => 'margin-top:10px;')); ?>
 
-<div class="form-actions">
-    <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'icon' => 'icon-envelope', 'label'=>'Request Reset')); ?>
+    <?php $this->endWidget(); ?>
 </div>
-
-<?php $this->endWidget(); ?>

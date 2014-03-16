@@ -21,11 +21,31 @@ class App extends CApplicationComponent {
     
     public function registerCoreScripts() {
         $this->registerAppJS(app()->clientScript->coreScriptPosition);
+        $this->registerBootstrap();
+        $this->registerFontAwesome();
     }
     
     public function registerAppJS($position = CClientScript::POS_HEAD) {
+        cs()->registerCoreScript('jquery', $position);
         cs()->registerScriptFile($this->getAssetsUrl().'/js/app.js', $position);
         cs()->registerScriptFile($this->getAssetsUrl().'/js/jquery.notifyBar.js', $position);
+    }
+
+    public function registerBootstrap()
+    {
+        $baseUrl = app()->getAssetManager()->publish(Yii::getPathOfAlias('webroot.vendor.twbs.bootstrap.dist'), false, 1);
+        if(!cs()->isCssFileRegistered($baseUrl . '/css/bootstrap.min.css') && !cs()->isScriptFileRegistered($baseUrl . '/js/bootstrap.min.js')) {
+            cs()->registerCssFile($baseUrl . '/css/bootstrap.min.css');
+            cs()->registerScriptFile($baseUrl . '/js/bootstrap.min.js', CClientScript::POS_END);
+        }
+    }
+
+    public function registerFontAwesome()
+    {
+        $baseUrl = app()->getAssetManager()->publish(Yii::getPathOfAlias('webroot.vendor.fortawesome.font-awesome'), false, 1);
+        if(!cs()->isCssFileRegistered($baseUrl . '/css/font-awesome.min.css')) {
+            cs()->registerCssFile($baseUrl . '/css/font-awesome.min.css');
+        }
     }
     
     protected function getAssetsUrl() {

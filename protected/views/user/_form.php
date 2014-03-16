@@ -4,15 +4,7 @@
 /* @var $form CActiveForm */
 ?>
 
-<?php
-$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-    'id' => 'register-form',
-    'type' => 'horizontal',
-    'enableAjaxValidation' => false,
-));
-?>
-
-<p>Fields with <span class="required">*</span> are required.</p>
+<?php $form = $this->beginWidget('CActiveForm', array('htmlOptions' => array('role' => 'form'))); ?>
 
 <?php echo (app()->user->isAdmin()&&$model->isNewRecord?'<div class="alert alert-info">
         <h4>Notice</h4>
@@ -21,43 +13,81 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
 <?php //echo $form->errorSummary($model); ?>
 
-<fieldset>
+<div class="form-group<?php if($form->error($model, 'first_name')) echo ' has-error'; ?>">
+    <?php echo $form->label($model, 'first_name'); ?>
+    <?php echo $form->textField($model, 'first_name', array(
+        'class' => 'form-control',
+        'size' => 45,
+        'maxlength' => 45,
+    )); ?>
+</div>
 
-    <?php echo $form->textFieldRow($model, 'first_name', array('size' => 45, 'maxlength' => 45)); ?>
+<div class="form-group<?php if($form->error($model, 'last_name')) echo ' has-error'; ?>">
+    <?php echo $form->label($model, 'last_name'); ?>
+    <?php echo $form->textField($model, 'last_name', array(
+        'class' => 'form-control',
+        'size' => 45,
+        'maxlength' => 45,
+    )); ?>
+</div>
 
-    <?php echo $form->textFieldRow($model, 'last_name', array('size' => 45, 'maxlength' => 45)); ?>
+<div class="form-group<?php if($form->error($model, 'username')) echo ' has-error'; ?>">
+    <?php echo $form->label($model, 'username'); ?>
+    <?php echo $form->textField($model, 'username', array(
+        'class' => 'form-control',
+        'size' => 15,
+        'maxlength' => 15,
+    )); ?>
+</div>
 
-    <?php echo $form->textFieldRow($model, 'email', array('size' => 60, 'maxlength' => 63)); ?>
+<div class="form-group<?php if($form->error($model, 'email')) echo ' has-error'; ?>">
+    <?php echo $form->label($model, 'email'); ?>
+    <?php echo $form->textField($model, 'email', array(
+        'class' => 'form-control',
+        'size' => 60,
+        'maxlength' => 63,
+    )); ?>
+</div>
 
-    <?php if(!$model->isNewRecord): // Edit a record (password fields are not shown here, instead a link) ?>
-    
-        <div class="control-group form-link">
-            <?php
-            $this->widget('bootstrap.widgets.TbButton', array(
-                'label' => 'Change Password',
-                'type' => 'link',
-                'icon' => 'key',
-                'url' => array('/user/password/' . $model->id),
-            ));
-            ?>
+<?php if(!$model->isNewRecord): // Edit a record (password fields are not shown here, instead a link) ?>
+
+    <div class="control-group form-link">
+        <?php echo CHtml::link('<i class="fa fa-key"></i> Change Password', array('user/password', 'id' => $model->id)); ?>
+    </div>
+
+<?php else: // Create new record ?>
+
+<?php if(!app()->user->isAdmin()): // Create new record as non admin user (password and captcha required) ?>
+
+        <div class="form-group<?php if($form->error($model, 'password')) echo ' has-error'; ?>">
+            <?php echo $form->label($model, 'password'); ?>
+            <?php echo $form->passwordField($model, 'password', array(
+                'class' => 'form-control',
+                'maxlength' => 63,
+            )); ?>
         </div>
 
-    <?php else: // Create new record ?>
+        <div class="form-group<?php if($form->error($model, 'pass2')) echo ' has-error'; ?>">
+            <?php echo $form->label($model, 'pass2'); ?>
+            <?php echo $form->passwordField($model, 'pass2', array(
+                'class' => 'form-control',
+                'maxlength' => 63,
+            )); ?>
+        </div>
 
-    <?php if(!app()->user->isAdmin()): // Create new record as non admin user (password and captcha required) ?>
-    
-    <?php echo $form->passwordFieldRow($model, 'password', array('size' => 60, 'maxlength' => 63)); ?>
-
-        <?php echo $form->passwordFieldRow($model, 'pass2', array('size' => 60, 'maxlength' => 63)); ?>
-    
-        <div class="control-group ">
-            <?php echo CHtml::activeLabel($model, 'verify', array('required' => true, 'class' => 'control-label')); ?>
-            <div class="controls">
-                <?php echo $form->textField($model, 'verify', array('class' => 'input-small')); ?>
-                <?php $this->widget('CCaptcha', array('clickableImage' => true, 'showRefreshButton' => false, 'imageOptions' => array('style' => 'vertical-align: top; margin-top: -10px; cursor: pointer;'))); ?>
-                <?php echo $form->error($model, 'verify'); ?>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group<?php if($form->error($model, 'verify')) echo ' has-error'; ?>">
+                    <?php echo CHtml::activeLabel($model, 'verify', array('required' => true)); ?>
+                    <?php echo $form->textField($model, 'verify', array(
+                        'class' => 'form-control',
+                    )); ?>
+                </div>
             </div>
-        </div>  
+            <div class="col-md-6" style="text-align: center;">
+                <?php $this->widget('CCaptcha', array('clickableImage' => true, 'showRefreshButton' => false, 'imageOptions' => array('style' => 'margin-top: 10px; cursor: pointer;'))); ?>
+            </div>
+        </div>
 
     <?php endif; ?>
 
@@ -67,18 +97,18 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
         <?php if(app()->user->id !== $model->id): // admin cannot take privileges from themselves ?>
 
-            <?php echo $form->checkBoxRow($model, 'admin'); ?>
+            <div class="checkbox">
+                <label><?php echo $form->checkBox($model,'admin'); ?><?php echo $model->getAttributeLabel('admin'); ?></label>
+            </div>
 
-            <?php echo $form->checkBoxRow($model, 'disabled'); ?>
+            <div class="checkbox">
+                <label><?php echo $form->checkBox($model,'disabled'); ?><?php echo $model->getAttributeLabel('disabled'); ?></label>
+            </div>
 
         <?php endif; ?>
-    
-    <?php endif; ?>
-    
-</fieldset>
 
-<div class="form-actions">
-    <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'label' => $model->isNewRecord ? app()->user->isAdmin() ? 'Create User' : 'Register' : 'Update')); ?>
-</div>
+    <?php endif; ?>
+
+<?php echo CHtml::submitButton($model->isNewRecord ? app()->user->isAdmin() ? 'Create User' : 'Register' : 'Update', array('class' => 'btn btn-primary btn-block', 'style' => 'margin-top:10px;')); ?>
 
 <?php $this->endWidget(); ?>

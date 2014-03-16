@@ -9,86 +9,84 @@ if(app()->user->hasFlash('success')) {
 
 ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="language" content="en" />
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title><?php echo h($this->pageTitle); ?></title>
-        <?php app()->bootstrap->register(true); ?>
+
         <link rel="stylesheet" type="text/css" href="<?php echo app()->request->baseUrl; ?>/css/system.css" media="screen, projection" />
     </head>
 
     <body>
         
         <div id="fb-root"></div>
-        
-        <?php
-        $this->widget('bootstrap.widgets.TbNavbar', array(
-            'brand' => h(app()->name),
-            'brandUrl' => bu(),
-            'collapse' => true,
-            'items'=>array(
-                array(
-                    'class'=>'bootstrap.widgets.TbMenu',
-                    'items'=>array(
-                        array('label' => 'Home', 'url' => array('/site/index')),
-                        array('label' => 'Profile', 'url' => array('/user/update', 'id' => app()->user->id), 'visible' => !app()->user->isGuest()),
-                        array('label' => 'Users', 'url' => array('/user/index'), 'visible' => app()->user->isAdmin()),
-                    ),
-                ),
-                app()->user->isGuest?
-                    array(
-                        'class' => 'bootstrap.widgets.TbButton',
-                        'htmlOptions' => array('class' => 'pull-right'),
-                        'label'=>'Login',
-                        'type'=>'success',
-                        'size'=>'normal',
-                        'url'=>array('/site/login'),
-                    )
-                :
-                    array(
-                        'class' => 'bootstrap.widgets.TbButton',
-                        'htmlOptions' => array('class' => 'pull-right'),
-                        'label'=>'Logout',
-                        'type'=>'warning',
-                        'size'=>'normal',
-                        'url'=>array('/site/logout'),
-                    )
-                ,
-                (app()->user->isGuest?array(
-                    'class' => 'bootstrap.widgets.TbButton',
-                    'htmlOptions' => array('class' => 'pull-right', 'style' => 'margin-right: 5px'),
-                    'label'=>'Register',
-                    'type'=>'info',
-                    'size'=>'normal',
-                    'url'=>array('/user/create'),
-                ):''),
-            ),
-        ));
-        ?>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <?php echo CHtml::link(app()->name, array('site/index'), array('class' => 'navbar-brand')); ?>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <?php
+                    $this->widget('zii.widgets.CMenu', array(
+                        'htmlOptions' => array('class' => 'nav navbar-nav'),
+                        'items' => array(
+                            array('label' => 'Home', 'url' => array('site/index')),
+                            array('label' => 'Profile', 'url' => array('user/update', 'id' => app()->user->id), 'visible' => !app()->user->isGuest()),
+                            array('label' => 'Users', 'url' => array('user/index'), 'visible' => app()->user->isAdmin()),
+                        ),
+                    ));
+
+                    if(app()->user->isGuest()) {
+                        echo CHtml::link('Login', array('site/login'), array('class' => 'btn btn-success navbar-btn navbar-right'));
+                        echo CHtml::link('Register', array('user/create'), array('class' => 'btn btn-info navbar-btn navbar-right', 'style' => 'margin-right: 5px'));
+                    } else {
+                        echo CHtml::link('Logout', array('site/logout'), array('class' => 'btn btn-warning navbar-btn navbar-right'));
+                    }
+                    ?>
+                </div><!--/.nav-collapse -->
+            </div>
+        </div>
 
         <div id="page">
 
             <div class="container main-holder">
 
+                <div class="row">
+
                 <?php
                 if(isset($this->breadcrumbs)){
-                    $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
-                        'links' => $this->breadcrumbs,
+                    $this->widget('app.widgets.Breadcrumbs.Breadcrumbs', array(
+                        'links'                 => $this->breadcrumbs,
+                        'tagName'               => 'ol',
+                        'separator'             => '',
+                        'htmlOptions'           => array('class' => 'breadcrumb'),
+                        'inactiveLinkTemplate'  => CHtml::tag('li', array('class' => 'active'), '{label}'),
+                        'activeLinkTemplate'    => CHtml::tag('li', array(), CHtml::link('{label}', '{url}')),
+                        'homeLink'              => CHtml::tag('li', array(), CHtml::link('Home', app()->homeUrl)),
                     ));
                 }
-                ?>
 
-                <?php if(app()->user->hasFlash('info')) {
-                    $this->widget('bootstrap.widgets.TbAlert', array(
-                        'block' => true,
-                        'fade' => true,
-                        'closeText' => '&times;',
-                    ));
-                } ?>
+                if(app()->user->hasFlash('info')) {
+                    echo CHtml::tag(
+                        'div',
+                        array('class' => 'alert alert-info alert-dismissable'),
+                        CHtml::htmlButton('&times;', array('class' => 'close', 'data-dismiss' => 'alert', 'aria-hidden' => 'true')) . app()->user->getFlash('info')
+                    );
+                }
 
-                <?php echo $content; ?>
+                echo $content; ?>
+
+                </div>
 
             </div>
             

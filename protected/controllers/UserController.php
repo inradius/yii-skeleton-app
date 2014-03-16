@@ -163,7 +163,7 @@ class UserController extends Controller {
                 $model = User::model()->findByEmail($_POST['User']['email']);
                 $timestamp = time();
                 $hash = User::encrypt($model->email . $model->password . $timestamp);
-                //Shared::debug($hash);
+                if(YII_DEBUG) Shared::debug($hash);
                 $model->pass_reset = $timestamp;
                 // save the timestamp (password reset is good for 24 hours only)
                 $model->save();
@@ -244,4 +244,38 @@ class UserController extends Controller {
         }
     }
 
+    public static function renderButtons($model) {
+        // todo - make this a widget since this is really sloppy for controller code
+        // todo - also, use bootstrap modal rather than generic js alert
+        $buttonGroup = CHtml::openTag('div', array('class' => 'btn-group'))
+            . CHtml::htmlButton('Action <span class="caret"></span>', array('class' => 'btn btn-default dropdown-toggle', 'data-toggle' => 'dropdown'))
+            . CHtml::openTag('ul', array('class' => 'dropdown-menu pull-right', 'role' => 'menu'))
+            . CHtml::tag('li', array(), CHtml::link('<i class="fa fa-edit"></i> Edit User', array('user/update', 'id' => $model->id)))
+            . CHtml::tag('li', array(), CHtml::link('<i class="fa fa-trash-o"></i> Delete User', array('user/delete', 'id' => $model->id), array("class" => "delete")))
+            . CHtml::closeTag('ul')
+            . CHtml::closeTag('div');
+
+        $script = 'jQuery(document).on("click","#user-gridview a.delete",function() {
+        if(!confirm("Are you sure you want to delete this item?")) return false;
+        var th = this,
+            afterDelete = function(){};
+        jQuery("#user-gridview").yiiGridView("update", {
+            type: "POST",
+            url: jQuery(this).attr("href"),
+            success: function(data) {
+                jQuery("#user-gridview").yiiGridView("update");
+                afterDelete(th, true, data);
+            },
+            error: function(XHR) {
+                return afterDelete(th, false, XHR);
+            }
+        });
+        return false;
+        });';
+
+        cs()->registerScript('edit-actions', $script, CClientScript::POS_END);
+
+
+        return $buttonGroup;
+    }
 }

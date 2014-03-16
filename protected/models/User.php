@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 'users':
  * @property string $id
+ * @property string $username
  * @property string $email
  * @property string $first_name
  * @property string $last_name
@@ -56,22 +57,24 @@ class User extends CActiveRecord {
             array('pass1, pass2', 'required', 'on' => 'resetPass'),
             array('pass2', 'compare', 'compareAttribute' => 'pass1', 'on' => 'resetPass, changePassword'),
             array('pass1, pass2', 'application.components.validate.EPasswordStrength', 'on' => 'resetPass, changePassword'),
+            array('username', 'required', 'on' => 'create'),
             array('password, pass2', 'required', 'on' => 'register'),
             array('pass2', 'compare', 'compareAttribute' => 'password', 'on' => 'register'),
             array('verify', 'captcha', 'allowEmpty' => !CCaptcha::checkRequirements(), 'on' => 'register, forgotPassword'),
             array('admin, verified, disabled', 'numerical', 'integerOnly' => true),
+            array('username', 'length', 'max' => 15),
             array('email, password', 'length', 'max' => 63),
             array('first_name, last_name', 'length', 'max' => 45),
             array('pass_reset', 'numerical', 'on' => 'passwordReset', 'integerOnly' => true),
             array('password, pass2', 'application.components.validate.EPasswordStrength', 'on' => 'register'),
             array('email', 'email', 'on' => 'update, create, register'),
             array('first_name, last_name', 'application.components.validate.ENameValidator'),
-            array('email', 'unique', 'on' => 'create, register'),
-            array('email', 'default', 'setOnEmpty' => true), // make empty values stored as NULL
+            array('username, email', 'unique', 'on' => 'create, register'),
+            array('first_name, last_name, activate, pass_reset', 'default', 'setOnEmpty' => true), // make empty values stored as NULL
             array('last_login', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, email, first_name, last_name, admin, verified, disabled', 'safe', 'on' => 'search'),
+            array('id, username, email, first_name, last_name, admin, verified, disabled', 'safe', 'on' => 'search'),
         );
     }
 
@@ -90,21 +93,22 @@ class User extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id' => 'ID',
-            'email' => 'Email',
-            'first_name' => 'First Name',
-            'last_name' => 'Last Name',
-            'password' => 'Password',
-            'activate' => 'Activate',
-            'last_login' => 'Last Login',
-            'pass_reset' => 'Password Reset',
-            'admin' => 'Admin',
-            'verified' => 'Email Verified',
-            'disabled' => 'Login Disabled',
-            'pass1' => 'New Password',
-            'pass2' => 'Confirm Password',
-            'old_password' => 'Current Password',
-            'verify' => 'Validate',
+            'id'            => 'ID',
+            'username'      => 'Username',
+            'email'         => 'Email',
+            'first_name'    => 'First Name',
+            'last_name'     => 'Last Name',
+            'password'      => 'Password',
+            'activate'      => 'Activate',
+            'last_login'    => 'Last Login',
+            'pass_reset'    => 'Password Reset',
+            'admin'         => 'Admin',
+            'verified'      => 'Email Verified',
+            'disabled'      => 'Login Disabled',
+            'pass1'         => 'New Password',
+            'pass2'         => 'Confirm Password',
+            'old_password'  => 'Current Password',
+            'verify'        => 'Validate',
         );
     }
 

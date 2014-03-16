@@ -21,6 +21,8 @@ $this->menu = array(
 );
 ?>
 
-<h1>Update <?php echo $model->email; ?></h1>
+<div class="col-md-12">
+    <h1  class="page-header">Update <?php echo $model->username; ?></h1>
 
-<?php echo $this->renderPartial('_form', array('model' => $model)); ?>
+    <?php echo $this->renderPartial('_form', array('model' => $model, 'pageName' => 'Update')); ?>
+</div>
