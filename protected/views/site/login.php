@@ -27,7 +27,7 @@ $this->breadcrumbs = array('Login');
         )); ?>
     </div>
 
-    <div class="checkbox">
+    <div class="checkbox row">
         <div class="col-md-6">
             <label><?php echo $form->checkBox($model,'rememberMe'); ?><?php echo $model->getAttributeLabel('rememberMe'); ?></label>
         </div>

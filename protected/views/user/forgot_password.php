@@ -23,16 +23,21 @@ $this->breadcrumbs = array(
         )); ?>
     </div>
 
-    <div class="form-group<?php if($form->error($model, 'verify')) echo ' has-error'; ?>">
-        <?php echo CHtml::activeLabel($model, 'verify', array('required' => true)); ?>
-        <div class="col-md-5">
-            <?php echo $form->textField($model, 'verify'); ?>
-            <?php $this->widget('CCaptcha', array('clickableImage' => true, 'showRefreshButton' => false, 'imageOptions' => array('style' => 'vertical-align: top; margin-top: -10px; cursor: pointer;'))); ?>
-            <?php echo $form->error($model, 'verify'); ?>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group<?php if($form->error($model, 'verify')) echo ' has-error'; ?>">
+                <?php echo CHtml::activeLabel($model, 'verify', array('required' => true)); ?>
+                <?php echo $form->textField($model, 'verify', array(
+                    'class' => 'form-control',
+                )); ?>
+            </div>
+        </div>
+        <div class="col-md-6" style="text-align: center;">
+            <?php $this->widget('CCaptcha', array('clickableImage' => true, 'showRefreshButton' => false, 'imageOptions' => array('style' => 'margin-top: 10px; cursor: pointer;'))); ?>
         </div>
     </div>
 
-    <?php echo CHtml::submitButton('Request Reset', array('class' => 'btn btn-default')); ?>
+    <?php echo CHtml::submitButton('Request Reset', array('class' => 'btn btn-primary btn-block', 'style' => 'margin-top:10px;')); ?>
 
     <?php $this->endWidget(); ?>
 </div>
