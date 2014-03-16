@@ -163,7 +163,7 @@ class UserController extends Controller {
                 $model = User::model()->findByEmail($_POST['User']['email']);
                 $timestamp = time();
                 $hash = User::encrypt($model->email . $model->password . $timestamp);
-                //Shared::debug($hash);
+                if(YII_DEBUG) Shared::debug($hash);
                 $model->pass_reset = $timestamp;
                 // save the timestamp (password reset is good for 24 hours only)
                 $model->save();

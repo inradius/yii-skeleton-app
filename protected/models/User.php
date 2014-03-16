@@ -50,7 +50,7 @@ class User extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('username, email', 'required'),
+            array('email', 'required'),
             array('email', 'exist', 'on' => 'forgotPassword'),
             array('old_password', 'application.components.validate.ECurrentPassword', 'on' => 'changePassword'),
             array((app()->user->isAdmin() ? 'pass1, pass2' : 'old_password, pass1, pass2'), 'required', 'on' => 'changePassword'),
