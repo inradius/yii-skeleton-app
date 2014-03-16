@@ -4,6 +4,7 @@
 
 if(app()->user->isAdmin()){
     $pageName = 'Create User';
+    $class = 'col-md-12';
     $this->layout = 'column2';
     $this->menu = array(
         array('label'=>'List User', 'url'=>array('index')),
@@ -11,6 +12,7 @@ if(app()->user->isAdmin()){
     );
 } else {
     $pageName = 'Register';
+    $class = 'col-md-4 col-md-offset-4';
 }
 
 $this->pageTitle = app()->name . ' - ' . $pageName;
@@ -19,4 +21,8 @@ $this->breadcrumbs = array(
 );
 ?>
 
-<?php echo $this->renderPartial('_form', array('model' => $model, 'pageName' => $pageName)); ?>
+<div class="<?php echo $class; ?>">
+    <h1  class="page-header"><?php echo $pageName; ?></h1>
+
+    <?php echo $this->renderPartial('_form', array('model' => $model)); ?>
+</div>
