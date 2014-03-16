@@ -52,14 +52,7 @@
 <?php if(!$model->isNewRecord): // Edit a record (password fields are not shown here, instead a link) ?>
 
     <div class="control-group form-link">
-        <?php
-        /*$this->widget('bootstrap.widgets.TbButton', array(
-            'label' => 'Change Password',
-            'type' => 'link',
-            'icon' => 'key',
-            'url' => array('/user/password/' . $model->id),
-        ));*/
-        ?>
+        <?php echo CHtml::link('<i class="fa fa-key"></i> Change Password', array('user/password', 'id' => $model->id)); ?>
     </div>
 
 <?php else: // Create new record ?>
@@ -104,9 +97,13 @@
 
         <?php if(app()->user->id !== $model->id): // admin cannot take privileges from themselves ?>
 
-            <?php echo $form->checkBox($model, 'admin'); ?>
+            <div class="checkbox">
+                <label><?php echo $form->checkBox($model,'admin'); ?><?php echo $model->getAttributeLabel('admin'); ?></label>
+            </div>
 
-            <?php echo $form->checkBox($model, 'disabled'); ?>
+            <div class="checkbox">
+                <label><?php echo $form->checkBox($model,'disabled'); ?><?php echo $model->getAttributeLabel('disabled'); ?></label>
+            </div>
 
         <?php endif; ?>
 
