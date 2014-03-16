@@ -11,8 +11,10 @@ class UserIdentity extends CUserIdentity {
     private $_id;
 
     public function authenticate() {
-        // find user by email
-        $user = User::model()->findByAttributes(array('email' => $this->username));
+        // find user by username or email
+        $user = User::model()->findByAttributes(array('username' => $this->username));
+        if($user === null)
+            $user = User::model()->findByAttributes(array('email' => $this->username));
 
         // begin checking the user
         if ($user === null) {
