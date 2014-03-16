@@ -24,6 +24,8 @@ $columns = array(
 $dataArray = array(
     'id'                => 'user-gridview',
     'filter'            => $model,
+    'filterPosition'    => 'hide',
+    'filterSelector'    => '#email-filter',
     'columns'           => $columns,
     'template'          => "{items}\n{pager}",
     'dataProvider'      => $dataProvider,
@@ -35,5 +37,6 @@ $dataArray = array(
 <div class="col-md-12">
     <h1 class="page-header">Users</h1>
 
+    <?php echo CHtml::textField('User[email]','',array('id' => 'email-filter', 'class' => 'form-action')); ?>
     <?php $this->widget('app.widgets.GridView.GridView', $dataArray); ?>
 </div>

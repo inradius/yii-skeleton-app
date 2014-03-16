@@ -10,6 +10,8 @@ Yii::import('zii.widgets.grid.CGridView');
 
 class GridView extends CGridView
 {
+    const FILTER_POS_HIDDEN='hide';
+
     public $selVar;
 
     public $selBaseScriptUrl;
@@ -53,6 +55,14 @@ class GridView extends CGridView
         }
         else
             $this->renderEmptyText();
+    }
+
+    public function renderFilter()
+    {
+        if($this->filterPosition===self::FILTER_POS_HIDDEN)
+            return;
+
+        parent::renderFilter();
     }
 
     public function registerClientScript()
